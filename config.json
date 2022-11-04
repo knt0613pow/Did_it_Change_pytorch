@@ -1,0 +1,51 @@
+{
+    "name": "DIT",
+    "n_gpu": 1,
+
+    "arch": {
+        "type": "Resnet_feature",
+        "args": {}
+    },
+    "data_loader": {
+        "type": "PairDataLoader",
+        "args":{
+            "data_dir": "Mallscpae/Mallspace-A/",
+            "batch_size": 2,
+            "shuffle": true,
+            "validation_split": 0.1,
+            "num_workers": 2,
+            "eval_dir" : "Mallscpae/mallscape_eval/metadata/Mallscape-A" 
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args":{
+            "lr": 0.00001,
+            "weight_decay": 0,
+            "amsgrad": true
+        }
+    },
+    "loss": "CT_loss",
+    "metrics": [
+        "change_accuracy"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 50,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        
+        "monitor": "min val_loss",
+        "early_stop": 10,
+
+        "tensorboard": true
+    }
+}
